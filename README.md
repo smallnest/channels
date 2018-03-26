@@ -59,23 +59,25 @@
 
 ## map/reduce 模式
 
-[map]()
-[reduce]()
+[mapreduce]()
 
 
 ## Fan In 扇入模式
 
 将多个channel合并成一个channel
 
+[fanIn]()
+
 ## Fan Out 扇出模式
 
 将一个Channel分成多个Channel。 有两种情况， 一种是每个channel都包含同样的数据(复制模式)， 另一种将原数据均匀分布到各输出channel中(分布模式)
 
-## Tee Channel
-
-类似linux的tee命令，是`Fan Out`的一种特例
-
-
+- 复制模式
+  - [fanOut]()
+  - [fanOutReflect]()
+- 分布模式
+  - [fanOut]()
+  - [fanOutReflect]()
 
 ## References
 1. https://github.com/kat-co/concurrency-in-go-src
