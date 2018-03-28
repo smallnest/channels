@@ -48,6 +48,7 @@ func fanOutReflect(ch <-chan interface{}, out []chan interface{}) {
 				cases[i].Chan = reflect.ValueOf(out[i])
 				cases[i].Send = reflect.ValueOf(v)
 			}
+
 			for _ = range cases { // for each channel
 				chosen, _, _ := reflect.Select(cases)
 				cases[chosen].Chan = reflect.ValueOf(nil)
