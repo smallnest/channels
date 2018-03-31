@@ -39,7 +39,7 @@ func (m *Mutex) TryLock(timeout time.Duration) bool {
 }
 
 func (m *Mutex) IsLocked() bool {
-	return len(m.ch) > 0
+	return len(m.ch) == 0
 }
 
 func main() {

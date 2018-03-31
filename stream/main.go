@@ -97,6 +97,13 @@ func skipN(done <-chan struct{}, valueStream <-chan interface{}, num int) <-chan
 			select {
 			case <-done:
 				return
+			case <-valueStream:
+			}
+		}
+		for {
+			select {
+			case <-done:
+				return
 			case takeStream <- <-valueStream:
 			}
 		}
