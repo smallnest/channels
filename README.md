@@ -84,3 +84,4 @@
 2. https://github.com/campoy/justforfunc/tree/master/27-merging-chans
 3. https://github.com/eapache/channels
 4. https://github.com/LK4D4/trylock
+5. https://github.com/lrita/gosync
