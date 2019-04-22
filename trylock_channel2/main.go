@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 )
 
 type Mutex struct {
@@ -11,41 +10,38 @@ type Mutex struct {
 
 func NewMutex() *Mutex {
 	mu := &Mutex{make(chan struct{}, 1)}
-	mu.ch <- struct{}{}
 	return mu
 }
 
 func (m *Mutex) Lock() {
-	<-m.ch
+	m.ch <- struct{}{}
 }
 
 func (m *Mutex) Unlock() {
 	select {
-	case m.ch <- struct{}{}:
+	case <-m.ch:
 	default:
 		panic("unlock of unlocked mutex")
 	}
 }
 
-func (m *Mutex) TryLock(timeout time.Duration) bool {
-	timer := time.NewTimer(timeout)
+func (m *Mutex) TryLock() bool {
 	select {
-	case <-m.ch:
-		timer.Stop()
+	case m.ch <- struct{}{}:
 		return true
-	case <-timer.C:
+	default:
 	}
 	return false
 }
 
 func (m *Mutex) IsLocked() bool {
-	return len(m.ch) == 0
+	return len(m.ch) == 1
 }
 
 func main() {
 	m := NewMutex()
-	ok := m.TryLock(time.Second)
+	ok := m.TryLock()
 	fmt.Printf("locked v %v\n", ok)
-	ok = m.TryLock(time.Second)
+	ok = m.TryLock()
 	fmt.Printf("locked %v\n", ok)
 }
